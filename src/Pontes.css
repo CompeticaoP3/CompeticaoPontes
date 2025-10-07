@@ -2,87 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chewy&family=Lexend+Deca:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
 /* Reset */
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
     margin: 0;
     padding: 0;
     border: 0;
@@ -91,17 +11,7 @@ video {
     vertical-align: baseline;
 }
 
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
     display: block;
 }
 
@@ -110,29 +20,6 @@ body {
     background: url('/pontesbg.png') center/cover no-repeat fixed;
     margin: 0;
     min-height: 100vh;
-}
-
-ol,
-ul {
-    list-style: none;
-}
-
-blockquote,
-q {
-    quotes: none;
-}
-
-blockquote::before,
-blockquote::after,
-q::before,
-q::after {
-    content: '';
-    content: none;
-}
-
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
 }
 
 /* Tela total */
@@ -149,7 +36,7 @@ table {
     min-width: 0;
 }
 
-/* Linhas */
+/* Esquerda */
 
 .pesos {
     justify-content: flex-end;
@@ -205,7 +92,48 @@ table {
   white-space: nowrap;
 }
 
-/* Principal */
+/* Meio */
+
+.equipe {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 50vh;
+    padding: 2vh;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.equipe:hover {
+    transform: translateY(-1px);
+}
+
+.equipe select {
+    width: auto;
+    min-width: fit-content;
+    text-align: center;
+    font-size: 7vh;
+    font-family: Chewy;
+    border-radius: 8px;
+    outline: none;
+    background-color: transparent;
+    color: white;
+    border: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.equipe select:focus {
+    border-color: #007bff;
+    background-color: transparent;
+    color: black;
+    box-shadow: none;
+    font-size: 4vh;
+}
+
 .principal {
     color: #fff;
     text-align: center;
@@ -261,7 +189,8 @@ table {
     margin-bottom: 1.5vh;
 }
 
-/* Papel */
+/* Direita */
+
 .papel {
     display: flex;
     flex-direction: column;
@@ -313,18 +242,15 @@ table {
 }
 
 .cargas {
+    display: flex;
     flex-direction: column;
     align-items: end;
     font-family: "Bebas Neue";
-    justify-content: center;
-    gap: 3vh;
     font-size: 4.7vh;
     text-align: center;
     margin-right: 1.5vh;
     color: white;
 }
-
-/* Estimadas */
 
 .button-31:hover,
 .button-31:focus {

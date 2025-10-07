@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './Pontes.css'
 import Linhas from './components/Linhas'
 
@@ -32,14 +32,17 @@ function Pontes() {
 
     const [contador, setContador] = useState(10)
     const [ativo, setAtivo] = useState(false)
-    const [equipe, setEquipe] = useState("Carregando")
+    const [equipe, setEquipe] = useState("")
+    const [equipes, setEquipes] = useState([])
 
     const [dados, setDados] = useState({
-        equipe: "Carregando",
+        equipe: "Equipe",
         peso: "0KG",
         cargaEstimada: "0KG",
         proximaCarga: "0KG"
     })
+
+    const selectRef = useRef(null)
 
     useEffect(() => {
         fetch("https://exemploDeAPI/exemplo/pontes/1")
@@ -53,7 +56,16 @@ function Pontes() {
             })
             .catch(err => {
                 console.error("Erro ao buscar dados:", err)
+            });
+
+        fetch("https://jsonplaceholder.typicode.com/users")
+            .then(res => res.json())
+            .then(data => {
+                setEquipes(data);
             })
+            .catch(err => {
+                console.error("Erro ao buscar equipes:", err);
+            });
     }, [])
 
     useEffect(() => {
@@ -66,7 +78,7 @@ function Pontes() {
                         setAtivo(false);
                         return 10;
                     }
-                    return prev - .1;
+                    return prev - 0.1;
                 });
             }, 100);
         }
@@ -83,9 +95,13 @@ function Pontes() {
         }
     }
 
+    const handleEquipeChange = (e) => {
+        setEquipe(e.target.value)
+        e.target.blur()
+    }
+
     return (
         <div className='pontes'>
-
             <div className='pesos'>
                 {linhas.map((linha, index) => (
                     <Linhas
@@ -99,9 +115,23 @@ function Pontes() {
 
             <div className='principal'>
                 <div className='equipe'>
-                    <h2>{equipe}</h2>
+                    <select
+                        ref={selectRef}
+                        name="equipes"
+                        id="equipes"
+                        value={equipe}
+                        onChange={handleEquipeChange}
+                    >
+                        <option value="" disabled>Selecione a Equipe</option>
+                        {equipes.map((equipeItem) => (
+                            <option key={equipeItem.id} value={equipeItem.name}>
+                                {equipeItem.name}
+                            </option>
+                        ))}
+                    </select>
                     <h3>{dados.peso}</h3>
                 </div>
+
                 <div className='contagem'>
                     <div className='circulo' onClick={handleClick}>
                         <h2>{contador.toFixed(1)}</h2>
@@ -118,15 +148,17 @@ function Pontes() {
                     <img src="/ponteicone.png" alt="" />
                 </div>
                 <div className='cargas'>
-                    <div className='estimada'>
-                        <h1>CARGA</h1>
-                        <h1>ESTIMADA</h1>
-                        <h2>{dados.cargaEstimada}</h2>
-                    </div>
-                    <div className='proxima'>
-                        <h1>CARGA</h1>
-                        <h1>PROXIMA</h1>
-                        <h2>{dados.proximaCarga}</h2>
+                    <div className='cargastitulo'>
+                        <div className='estimada'>
+                            <h1>CARGA</h1>
+                            <h1>ESTIMADA</h1>
+                            <h2>{dados.cargaEstimada}</h2>
+                        </div>
+                        <div className='proxima'>
+                            <h1 style={{ marginTop: "3vh" }}>CARGA</h1>
+                            <h1>ATUAL</h1>
+                            <h2>{dados.proximaCarga}</h2>
+                        </div>
                     </div>
                 </div>
                 <div className='apoio'>
