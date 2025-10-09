@@ -5,14 +5,14 @@ function Linhas(props) {
     return (
         <div className='linhas'>
             <div className='linha'>
-                <div className='esquerda'>
+                <div className='esquerda-linha'>
                     {props.tipo && (
                         <div className="caixa" id="tipo">
                             <p>{props.tipo}</p>
                         </div>
                     )}
                 </div>
-                <div className='meio'>
+                <div className='meio-linha'>
                     {props.kilo && (
                         <div
                             className="caixa"
@@ -23,7 +23,7 @@ function Linhas(props) {
                         </div>
                     )}
                 </div>
-                <div className='direita'>
+                <div className='direita-linha'>
                     {props.kilorecorde && (
                         <div className="caixa" id="kilorecorde">
                             <p>{props.kilorecorde}</p>

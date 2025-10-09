@@ -134,7 +134,7 @@ function Pontes() {
 
                 <div className='contagem'>
                     <div className='circulo' onClick={handleClick}>
-                        <h2>{contador.toFixed(1)}</h2>
+                        <p>{contador.toFixed(1)}</p>
                     </div>
                 </div>
                 <div className='status'>
@@ -142,28 +142,27 @@ function Pontes() {
                 </div>
             </div>
 
-            <div className='papel'>
+            <div className='direita'>
                 <div className='icones'>
-                    <img src="/icone.png" alt="" />
-                    <img src="/ponteicone.png" alt="" />
+                    <img src="/pontesLogo.png" alt="" />
                 </div>
                 <div className='cargas'>
                     <div className='cargastitulo'>
                         <div className='estimada'>
-                            <h1>CARGA</h1>
-                            <h1>ESTIMADA</h1>
-                            <h2>{dados.cargaEstimada}</h2>
+                            <p>CARGA</p>
+                            <p>ESTIMADA</p>
+                            <p>{dados.cargaEstimada}</p>
                         </div>
                         <div className='proxima'>
-                            <h1 style={{ marginTop: "3vh" }}>CARGA</h1>
-                            <h1>ATUAL</h1>
-                            <h2>{dados.proximaCarga}</h2>
+                            <p style={{ marginTop: "3vh" }}>CARGA</p>
+                            <p>ATUAL</p>
+                            <p>{dados.proximaCarga}</p>
                         </div>
                     </div>
                 </div>
                 <div className='apoio'>
                     <div className='apoiotexto'>
-                        <h2>APOIO</h2>
+                        <p>APOIO</p>
                     </div>
                     <div className='imagens'>
                         <img src="/proec.png" alt="" />
