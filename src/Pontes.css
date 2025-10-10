@@ -1,7 +1,9 @@
 /* Fontes */
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chewy&family=Lexend+Deca:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 /* Reset */
+
 html, body, div, span, applet, object, iframe, h1, p, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
     margin: 0;
     padding: 0;
@@ -20,6 +22,7 @@ body {
     background: url('/pontesbg.png') center/cover no-repeat fixed;
     margin: 0;
     min-height: 100vh;
+    overflow: hidden;
 }
 
 /* Tela total */
@@ -47,7 +50,7 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    margin: 2vh 4vh;
+    margin: 2vh 2vh;
 }
 
 .linha {
@@ -65,31 +68,28 @@ body {
   background: #006494;
   color: #fff;
   box-shadow: rgba(0,0,0,.1) 0 0.6vh 1.6vh;
-  font-family: "Lexend Deca", sans-serif;
-  width: 18vh;
+  font-family: "Inter", sans-serif;
+  font-weight: bold;
+  width: 16vh;
   height: 3vh;
-  margin: 0vh 0.3vh -5vh;
+  margin: 0vh 0.2vh -5vh;
   border-radius: 0.5vh;
   display: flex;
   justify-content: center;
   align-items: center;
   border-style: none;
   box-sizing: border-box;
-  font-weight: 700;
-  line-height: 1.5;
-  max-width: none;
-  outline: none;
-  overflow: hidden;
-  text-transform: none;
-  user-select: none;
-  touch-action: manipulation;
   font-size: 2.2vh;
 }
 
 #tipo {
-  background: #041F64;
+  background: #507d46;
   font-size: 1.6vh;
   white-space: nowrap;
+}
+
+#kilorecorde {
+    background-color: #507d46;
 }
 
 /* Meio */
@@ -99,37 +99,25 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 50vh;
-    padding: 2vh;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-}
-
-.equipe:hover {
-    transform: translateY(-1px);
+    margin-top: 2vh;
 }
 
 .equipe select {
     width: auto;
-    min-width: fit-content;
     text-align: center;
-    font-size: 7vh;
-    font-family: Chewy;
-    border-radius: 8px;
+    font-size: 6vh;
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
     outline: none;
     background-color: transparent;
     color: white;
     border: none;
     appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
 }
 
 .equipe select:focus {
     border-color: #007bff;
-    background-color: transparent;
     color: black;
-    box-shadow: none;
     font-size: 4vh;
 }
 
@@ -143,13 +131,15 @@ body {
 
 .principal p {
     font-size: 6vh;
-    font-family: Chewy;
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
     margin: 3vh 0 1.5vh;
 }
 
 .principal h3 {
     font-size: 3.5vh;
-    font-family: Chewy;
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
     text-decoration: underline;
 }
 
@@ -161,15 +151,17 @@ body {
 .circulo {
     width: 38vh;
     height: 38vh;
-    background: linear-gradient(180deg, #1CB5E0 0%, #000851 100%);
+    background: linear-gradient(180deg, #022E5F 30%, #688B5F 100%);
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .circulo p {
-    font-family: Chewy;
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
     font-size: 22vh;
     text-align: center;
     
@@ -204,15 +196,15 @@ body {
     flex-direction: column;
     align-items: flex-end;
     justify-content: flex-end;
-    height: 100vh;
     width: 100%;
     margin-right: 2vh;
 }
 
 .apoiotexto {
-    font-family: "Bebas Neue";
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
     font-size: 3.5vh;
-    margin-right: 2vh;
+    margin-right: 1vh;
     color: #fff;
 }
 
@@ -228,9 +220,8 @@ body {
 
 .icones {
     justify-content: end;
-    flex-direction: row;
     gap: 1.5vh;
-    margin: 1.5vh 1.5vh 0 0;
+    margin: 2.2vh 1.5vh 0 0;
 }
 
 .icones img {
@@ -242,12 +233,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: end;
-    font-family: "Bebas Neue";
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
     font-size: 5.5vh;
     text-align: center;
     color: white;   
 }
 
 .cargas p {
-        margin-right: 6vh;
+        margin-right: 2vh;
 }

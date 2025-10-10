@@ -3,41 +3,71 @@ import './Pontes.css'
 import Linhas from './components/Linhas'
 
 function Pontes() {
-    const [linhas] = useState([
-        { "ordem": "23", "kilo": "10KG" },
-        { "ordem": "22", "kilo": "10KG" },
-        { "ordem": "21", "kilo": "10KG" },
-        { "ordem": "20", "kilo": "10KG" },
-        { "ordem": "19", "kilo": "10KG" },
-        { "ordem": "18", "kilo": "10KG" },
-        { "ordem": "17", "kilo": "10KG" },
-        { "ordem": "16", "kilo": "10KG" },
-        { "ordem": "15", "kilo": "5KG" },
-        { "ordem": "14", "kilo": "5KG" },
-        { "ordem": "13", "kilo": "5KG" },
-        { "ordem": "12", "kilo": "10KG" },
-        { "ordem": "11", "kilo": "10KG" },
-        { "ordem": "10", "kilo": "10KG" },
-        { "ordem": "9", "kilo": "5KG", },
-        { "ordem": "8", "kilo": "5KG" },
-        { "ordem": "7", "kilo": "5KG" },
-        { "ordem": "6", "kilo": "10KG" },
-        { "ordem": "5", "kilo": "10KG" },
-        { "ordem": "4", "kilo": "10KG" },
-        { "ordem": "3", "kilo": "5KG" },
-        { "ordem": "2", "kilo": "5KG" },
-        { "ordem": "1", "kilo": "5KG" },
-        { "tipo": "teste", "ordem": "0", "kilo": "11KG", "kilorecorde": "15KG" },
-    ])
-
+    const [linhas, setLinhas] = useState([
+        { "tipo": "Recorde", "ordem": "23", "kilo": "10KG", "kilorecorde": "246KG" },
+        { "tipo": "", "ordem": "22", "kilo": "10KG" },
+        { "tipo": "", "ordem": "21", "kilo": "10KG" },
+        { "tipo": "", "ordem": "20", "kilo": "10KG" },
+        { "tipo": "", "ordem": "19", "kilo": "10KG" },
+        { "tipo": "", "ordem": "18", "kilo": "10KG" },
+        { "tipo": "", "ordem": "17", "kilo": "10KG" },
+        { "tipo": "", "ordem": "16", "kilo": "10KG" },
+        { "tipo": "", "ordem": "15", "kilo": "5KG" },
+        { "tipo": "", "ordem": "14", "kilo": "5KG" },
+        { "tipo": "", "ordem": "13", "kilo": "5KG" },
+        { "tipo": "", "ordem": "12", "kilo": "10KG" },
+        { "tipo": "", "ordem": "11", "kilo": "10KG" },
+        { "tipo": "", "ordem": "10", "kilo": "10KG" },
+        { "tipo": "", "ordem": "9", "kilo": "5KG" },
+        { "tipo": "", "ordem": "8", "kilo": "5KG" },
+        { "tipo": "", "ordem": "7", "kilo": "5KG" },
+        { "tipo": "", "ordem": "6", "kilo": "10KG" },
+        { "tipo": "", "ordem": "5", "kilo": "10KG" },
+        { "tipo": "", "ordem": "4", "kilo": "10KG" },
+        { "tipo": "", "ordem": "3", "kilo": "5KG" },
+        { "tipo": "", "ordem": "2", "kilo": "5KG" },
+        { "tipo": "Proxima Carga", "ordem": "1", "kilo": "5KG" },
+        { "tipo": "Carga Atual", "ordem": "0", "kilo": "11KG" }
+    ]);
+    let recorde = 246
     const [contador, setContador] = useState(10)
     const [ativo, setAtivo] = useState(false)
     const [equipe, setEquipe] = useState("")
     const [equipes, setEquipes] = useState([])
+    const [cargaAtual, setCargaAtual] = useState("11KG");
+    const [cargaEstimada, setCargaEstimada] = useState("0KG");
+    
+    let pesoAtual = 0;
+    let atual = linhas.indexOf(linhas.find(linha => linha.tipo === "Carga Atual"))
+
+    const moverAtual = (novaPosicao) => {
+        setLinhas((prevLinhas) => {
+            const indexAtual = prevLinhas.findIndex((l) => l.tipo === "Carga Atual");
+            if (indexAtual === -1) return prevLinhas;
+
+            pesoAtual += parseInt(prevLinhas[indexAtual].kilo.trim().replace("KG", ""));
+            console.log("Peso Atual:", pesoAtual);
+            if (pesoAtual > recorde) {
+                recorde = pesoAtual;
+                alert(`Novo recorde: ${recorde}KG!`);
+            }
+
+            const novaCarga = prevLinhas[novaPosicao].kilo;
+            setCargaAtual(novaCarga);
+
+            return prevLinhas.map((l, i) => {
+                if (i === novaPosicao) return { ...l, tipo: "Carga Atual" };
+                if (i === novaPosicao - 1) return { ...l, tipo: "Proxima Carga" };
+                if (l.tipo === "Recorde") return l;
+                return { ...l, tipo: "" };
+            });
+        });
+    };
+
 
     const [dados, setDados] = useState({
         equipe: "Equipe",
-        peso: "0KG",
+        massaDaPonte: "0KG",
         cargaEstimada: "0KG",
         proximaCarga: "0KG"
     })
@@ -45,19 +75,6 @@ function Pontes() {
     const selectRef = useRef(null)
 
     useEffect(() => {
-        fetch("https://exemploDeAPI/exemplo/pontes/1")
-            .then(res => res.json())
-            .then(data => {
-                setDados({
-                    peso: data.peso || "0KG",
-                    cargaEstimada: data.cargaEstimada || "0KG",
-                    proximaCarga: data.proximaCarga || "0KG"
-                })
-            })
-            .catch(err => {
-                console.error("Erro ao buscar dados:", err)
-            });
-
         fetch("https://jsonplaceholder.typicode.com/users")
             .then(res => res.json())
             .then(data => {
@@ -74,8 +91,9 @@ function Pontes() {
         if (ativo) {
             intervalo = setInterval(() => {
                 setContador((prev) => {
-                    if (prev <= 1) {
+                    if (prev <= 0.1) {
                         setAtivo(false);
+                        moverAtual(atual === 0 ? 7 : atual - 1);
                         return 10;
                     }
                     return prev - 0.1;
@@ -92,11 +110,13 @@ function Pontes() {
             setAtivo(true)
         } else {
             setAtivo(false)
+            setContador(10)
         }
     }
 
     const handleEquipeChange = (e) => {
         setEquipe(e.target.value)
+        moverAtual(linhas.length - 1)
         e.target.blur()
     }
 
@@ -129,12 +149,12 @@ function Pontes() {
                             </option>
                         ))}
                     </select>
-                    <h3>{dados.peso}</h3>
+                    <h3>{dados.massaDaPonte}</h3>
                 </div>
 
                 <div className='contagem'>
                     <div className='circulo' onClick={handleClick}>
-                        <p>{contador.toFixed(1)}</p>
+                        <p>{contador === 10 ? 10 : contador.toFixed(1)}</p>
                     </div>
                 </div>
                 <div className='status'>
@@ -151,12 +171,12 @@ function Pontes() {
                         <div className='estimada'>
                             <p>CARGA</p>
                             <p>ESTIMADA</p>
-                            <p>{dados.cargaEstimada}</p>
+                            <p>{cargaEstimada}</p>
                         </div>
                         <div className='proxima'>
                             <p style={{ marginTop: "3vh" }}>CARGA</p>
                             <p>ATUAL</p>
-                            <p>{dados.proximaCarga}</p>
+                            <p>{cargaAtual}</p>
                         </div>
                     </div>
                 </div>
