@@ -4,7 +4,7 @@ import Linhas from './components/Linhas'
 
 function Pontes() {
     const [linhas, setLinhas] = useState([
-        { "tipo": "Recorde", "ordem": "23", "kilo": "10KG", "kilorecorde": "246KG" },
+        { "tipo": "", "ordem": "23", "kilo": "10KG" },
         { "tipo": "", "ordem": "22", "kilo": "10KG" },
         { "tipo": "", "ordem": "21", "kilo": "10KG" },
         { "tipo": "", "ordem": "20", "kilo": "10KG" },
@@ -27,38 +27,44 @@ function Pontes() {
         { "tipo": "", "ordem": "3", "kilo": "5KG" },
         { "tipo": "", "ordem": "2", "kilo": "5KG" },
         { "tipo": "Proxima Carga", "ordem": "1", "kilo": "5KG" },
-        { "tipo": "Carga Atual", "ordem": "0", "kilo": "11KG" }
+        { "tipo": "Carga Atual", "ordem": "0", "kilo": "11KG" , "kilorecorde": "11KG"}
     ]);
-    let recorde = 246
+
     const [contador, setContador] = useState(10)
     const [ativo, setAtivo] = useState(false)
     const [equipe, setEquipe] = useState("")
     const [equipes, setEquipes] = useState([])
     const [cargaAtual, setCargaAtual] = useState("11KG");
     const [cargaEstimada, setCargaEstimada] = useState("0KG");
-    
-    let pesoAtual = 0;
+    const [cargaAcumulada, setCargaAcumulada] = useState(11);
+
     let atual = linhas.indexOf(linhas.find(linha => linha.tipo === "Carga Atual"))
+
 
     const moverAtual = (novaPosicao) => {
         setLinhas((prevLinhas) => {
             const indexAtual = prevLinhas.findIndex((l) => l.tipo === "Carga Atual");
             if (indexAtual === -1) return prevLinhas;
-
-            pesoAtual += parseInt(prevLinhas[indexAtual].kilo.trim().replace("KG", ""));
-            console.log("Peso Atual:", pesoAtual);
-            if (pesoAtual > recorde) {
-                recorde = pesoAtual;
-                alert(`Novo recorde: ${recorde}KG!`);
-            }
+            
 
             const novaCarga = prevLinhas[novaPosicao].kilo;
-            setCargaAtual(novaCarga);
+            const valorCarga = parseInt(novaCarga.replace("KG", ""));
+
+            const novoTotal = cargaAcumulada + valorCarga;
+
+            setCargaAcumulada(novoTotal);
+
+            setCargaAtual(novoTotal + "KG");
 
             return prevLinhas.map((l, i) => {
-                if (i === novaPosicao) return { ...l, tipo: "Carga Atual" };
-                if (i === novaPosicao - 1) return { ...l, tipo: "Proxima Carga" };
-                if (l.tipo === "Recorde") return l;
+                if (i === novaPosicao)
+                    return { ...l, tipo: "Carga Atual", kilorecorde: novoTotal + "KG" };
+                if (i === novaPosicao - 1)
+                    return { ...l, tipo: "Proxima Carga" };
+                if (i === indexAtual)
+                    return { ...l, tipo: "", kilorecorde: "" };
+                if (l.tipo === "Recorde")
+                    return l;
                 return { ...l, tipo: "" };
             });
         });
@@ -116,6 +122,8 @@ function Pontes() {
 
     const handleEquipeChange = (e) => {
         setEquipe(e.target.value)
+        setCargaAcumulada(11)
+        setCargaAtual("11KG")
         moverAtual(linhas.length - 1)
         e.target.blur()
     }
@@ -158,7 +166,7 @@ function Pontes() {
                     </div>
                 </div>
                 <div className='status'>
-                    <h3>{ativo ? "Contando..." : "Contador"}</h3>
+                    <h3></h3>
                 </div>
             </div>
 

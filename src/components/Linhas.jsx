@@ -2,6 +2,7 @@ import { useState } from 'react'
 import '../Pontes.css'
 
 function Linhas(props) {
+    const propsStyle = {width: props.kilo === '5KG' ? "13vh" : "18vh",backgroundColor: props.tipo === 'Carga Atual' ? '#507d46' : '#006494'};
     return (
         <div className='linhas'>
             <div className='linha'>
@@ -17,7 +18,7 @@ function Linhas(props) {
                         <div
                             className="caixa"
                             id="kilo"
-                            style={props.kilo === '5KG' ? { width: "13vh" } : { width: "18vh" }}
+                            style= {propsStyle}
                         >
                             <p>{props.kilo}</p>
                         </div>
