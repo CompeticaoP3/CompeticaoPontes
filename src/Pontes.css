@@ -1,88 +1,10 @@
 /* Fontes */
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chewy&family=Lexend+Deca:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=League+Spartan:wght@100..900&display=swap');
 
 /* Reset */
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
+
+html, body, div, span, applet, object, iframe, h1, p, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
     margin: 0;
     padding: 0;
     border: 0;
@@ -91,17 +13,7 @@ video {
     vertical-align: baseline;
 }
 
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
     display: block;
 }
 
@@ -110,29 +22,9 @@ body {
     background: url('/pontesbg.png') center/cover no-repeat fixed;
     margin: 0;
     min-height: 100vh;
-}
-
-ol,
-ul {
-    list-style: none;
-}
-
-blockquote,
-q {
-    quotes: none;
-}
-
-blockquote::before,
-blockquote::after,
-q::before,
-q::after {
-    content: '';
-    content: none;
-}
-
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
+    overflow: hidden;
+    font-weight: 900;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 /* Tela total */
@@ -142,14 +34,14 @@ table {
     height: 100vh;
 }
 
-.pesos, .principal, .papel {
+.pesos, .principal, .direita {
     flex: 1 1 0;
     display: flex;
     flex-direction: column;
     min-width: 0;
 }
 
-/* Linhas */
+/* Esquerda */
 
 .pesos {
     justify-content: flex-end;
@@ -160,14 +52,14 @@ table {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    margin: 2vh 4vh;
+    margin: 2vh 2vh;
 }
 
 .linha {
     display: flex;
 }
 
-.esquerda, .meio, .direita {
+.esquerda-linha, .meio-linha, .direita-linha {
     flex: 1;
     display: flex;
     justify-content: center;
@@ -178,34 +70,58 @@ table {
   background: #006494;
   color: #fff;
   box-shadow: rgba(0,0,0,.1) 0 0.6vh 1.6vh;
-  font-family: "Lexend Deca", sans-serif;
-  width: 18vh;
+  
+  width: 16vh;
   height: 3vh;
-  margin: 0vh 0.3vh -5vh;
+  margin: 0vh 0.2vh -5vh;
   border-radius: 0.5vh;
   display: flex;
   justify-content: center;
   align-items: center;
   border-style: none;
   box-sizing: border-box;
-  font-weight: 700;
-  line-height: 1.5;
-  max-width: none;
-  outline: none;
-  overflow: hidden;
-  text-transform: none;
-  user-select: none;
-  touch-action: manipulation;
   font-size: 2.2vh;
 }
 
 #tipo {
-  background: #041F64;
-  font-size: 1.6vh;
+  background: #507d46;
+  font-size: 1.8vh;
   white-space: nowrap;
 }
 
-/* Principal */
+#kilorecorde {
+    background-color: #507d46;
+}
+
+/* Meio */
+
+.equipe {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2vh;
+}
+
+.equipe select {
+    width: auto;
+    text-align: center;
+    font-size: 6vh;
+    
+    outline: none;
+    background-color: transparent;
+    color: white;
+    border: none;
+    appearance: none;
+    font-weight: 900;
+}
+
+.equipe select:focus {
+    border-color: #007bff;
+    color: black;
+    font-size: 4vh;
+}
+
 .principal {
     color: #fff;
     text-align: center;
@@ -214,15 +130,15 @@ table {
     justify-content: space-between;
 }
 
-.principal h2 {
+.principal p {
     font-size: 6vh;
-    font-family: Chewy;
+    
     margin: 3vh 0 1.5vh;
 }
 
 .principal h3 {
     font-size: 3.5vh;
-    font-family: Chewy;
+    
     text-decoration: underline;
 }
 
@@ -234,41 +150,42 @@ table {
 .circulo {
     width: 38vh;
     height: 38vh;
-    background: linear-gradient(180deg, #1CB5E0 0%, #000851 100%);
+    background: linear-gradient(180deg, #022E5F 30%, #688B5F 100%);
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: po;
 }
 
-.circulo h2 {
-    font-family: Chewy;
+.circulo p {
     font-size: 22vh;
     text-align: center;
-    
+    margin-bottom: 5vh;
 }
 
 .status {
     width: 100%;
     height: 20vh;
-    background: url("/ponte.png") center/contain no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 
 .status h3 {
     margin-bottom: 1.5vh;
 }
 
-/* Papel */
-.papel {
+/* Direita */
+
+.direita {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    background: url('/papel.png') center/cover;
     width: 100%;
     height: 100vh;
+    margin-right: 8vh;
 }
 
 .apoio {
@@ -276,15 +193,15 @@ table {
     flex-direction: column;
     align-items: flex-end;
     justify-content: flex-end;
-    height: 100vh;
     width: 100%;
     margin-right: 2vh;
 }
 
+
 .apoiotexto {
-    font-family: "Bebas Neue";
+    
     font-size: 3.5vh;
-    margin-right: 2vh;
+    margin-right: 1vh;
     color: #fff;
 }
 
@@ -293,40 +210,36 @@ table {
     height: 12vh;
 }
 
-.cargas,
-.apoio,
-.icones {
+.cargas, .apoio, .icones {
     flex: 1;
     display: flex;
 }
 
 .icones {
     justify-content: end;
-    flex-direction: row;
     gap: 1.5vh;
-    margin: 1.5vh 1.5vh 0 0;
+    margin: 2.2vh 1.5vh 0 0;
 }
 
 .icones img {
-    width: 9vh;
-    height: 9vh;
+    width: auto;
+    height: 10vh;
+}
+
+.icones a {
+    height: 3.2vh;
 }
 
 .cargas {
+    display: flex;
     flex-direction: column;
     align-items: end;
-    font-family: "Bebas Neue";
-    justify-content: center;
-    gap: 3vh;
-    font-size: 4.7vh;
+    
+    font-size: 5vh;
     text-align: center;
-    margin-right: 1.5vh;
-    color: white;
+    color: white;   
 }
 
-/* Estimadas */
-
-.button-31:hover,
-.button-31:focus {
-  opacity: .75;
+.cargas p {
+        margin-right: 2vh;
 }
