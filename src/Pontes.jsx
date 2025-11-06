@@ -33,16 +33,16 @@ function Pontes() {
   const [linhas, setLinhas] = useState(LINHAS_INICIAIS);
   const [contador, setContador] = useState(10);
   const [ativo, setAtivo] = useState(false);
-  const [equipe, setEquipe] = useState("");
+  const [equipe, setEquipe] = useState({});
   const [equipes, setEquipes] = useState([]);
   const [cargaAtual, setCargaAtual] = useState("11KG");
-  const [cargaEstimada, setCargaEstimada] = useState("0KG");
+  const [cargaPrevista, setCargaPrevista] = useState("0KG");
   const [cargaAcumulada, setCargaAcumulada] = useState(11);
 
   const [dados, setDados] = useState({
     equipe: "Equipe",
     massaDaPonte: "0KG",
-    cargaEstimada: "0KG",
+    cargaPrevista: "0KG",
     proximaCarga: "0KG"
   });
 
@@ -115,12 +115,14 @@ function Pontes() {
   };
 
   const handleEquipeChange = (e) => {
-    const novaEquipe = e.target.value;
+    const novaEquipe = equipes.find(eq => eq.nome === e.target.value);
+    
     setEquipe(novaEquipe);
+    
 
     setLinhas([...LINHAS_INICIAIS]);
     setCargaAtual("11KG");
-    setCargaEstimada("0KG");
+    setCargaPrevista(novaEquipe.cargaPrevista + "KG");
     setCargaAcumulada(11);
     setContador(10);
     setAtivo(false);
@@ -148,7 +150,7 @@ function Pontes() {
             ref={selectRef}
             name="equipes"
             id="equipes"
-            value={equipe}
+            value={equipe.nome}
             onChange={handleEquipeChange}
           >
             <option value="" disabled>Selecione a Equipe</option>
@@ -157,8 +159,8 @@ function Pontes() {
                 {equipeItem.nome}
               </option>
             ))}
-
           </select>
+
           <h3>{dados.massaDaPonte}</h3>
         </div>
 
@@ -180,7 +182,7 @@ function Pontes() {
             <div className='estimada'>
               <p>CARGA</p>
               <p>ESTIMADA</p>
-              <p>{cargaEstimada}</p>
+              <p>{cargaPrevista}</p>
             </div>
             <div className='proxima'>
               <p style={{ marginTop: "3vh" }}>CARGA</p>
