@@ -38,13 +38,7 @@ function Pontes() {
   const [cargaAtual, setCargaAtual] = useState("11KG");
   const [cargaPrevista, setCargaPrevista] = useState("0KG");
   const [cargaAcumulada, setCargaAcumulada] = useState(11);
-
-  const [dados, setDados] = useState({
-    equipe: "Equipe",
-    massaDaPonte: "0KG",
-    cargaPrevista: "0KG",
-    proximaCarga: "0KG"
-  });
+  const [massaPonte, setMassaPonte] = useState("0KG");
 
   const selectRef = useRef(null);
 
@@ -82,7 +76,7 @@ function Pontes() {
         if (!res.ok) throw new Error(`Erro na resposta: ${res.status}`);
         return res.json();
       })
-      .then(data => setEquipes(data))  // <-- salva no estado
+      .then(data => setEquipes(data))
       .catch(err => console.error("Erro ao buscar equipes:", err));
   }, []);
 
@@ -116,10 +110,9 @@ function Pontes() {
 
   const handleEquipeChange = (e) => {
     const novaEquipe = equipes.find(eq => eq.nome === e.target.value);
-    
-    setEquipe(novaEquipe);
-    
 
+    setEquipe(novaEquipe);
+    setMassaPonte(novaEquipe.massaPonte + "KG");
     setLinhas([...LINHAS_INICIAIS]);
     setCargaAtual("11KG");
     setCargaPrevista(novaEquipe.cargaPrevista + "KG");
@@ -153,7 +146,7 @@ function Pontes() {
             value={equipe.nome}
             onChange={handleEquipeChange}
           >
-            <option value="" disabled>Selecione a Equipe</option>
+            <option value="">Selecione a Equipe</option>
             {equipes.map((equipeItem) => (
               <option key={equipeItem.id} value={equipeItem.nome}>
                 {equipeItem.nome}
@@ -161,7 +154,7 @@ function Pontes() {
             ))}
           </select>
 
-          <h3>{dados.massaDaPonte}</h3>
+          <h3>{massaPonte}</h3>
         </div>
 
         <div className='contagem'>
