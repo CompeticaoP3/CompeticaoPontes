@@ -33,18 +33,12 @@ function Pontes() {
   const [linhas, setLinhas] = useState(LINHAS_INICIAIS);
   const [contador, setContador] = useState(10);
   const [ativo, setAtivo] = useState(false);
-  const [equipe, setEquipe] = useState("");
+  const [equipe, setEquipe] = useState({});
   const [equipes, setEquipes] = useState([]);
   const [cargaAtual, setCargaAtual] = useState("11KG");
-  const [cargaEstimada, setCargaEstimada] = useState("0KG");
+  const [cargaPrevista, setCargaPrevista] = useState("0KG");
   const [cargaAcumulada, setCargaAcumulada] = useState(11);
-
-  const [dados, setDados] = useState({
-    equipe: "Equipe",
-    massaDaPonte: "0KG",
-    cargaEstimada: "0KG",
-    proximaCarga: "0KG"
-  });
+  const [massaPonte, setMassaPonte] = useState("0KG");
 
   const selectRef = useRef(null);
 
@@ -82,7 +76,7 @@ function Pontes() {
         if (!res.ok) throw new Error(`Erro na resposta: ${res.status}`);
         return res.json();
       })
-      .then(data => setEquipes(data))  // <-- salva no estado
+      .then(data => setEquipes(data))
       .catch(err => console.error("Erro ao buscar equipes:", err));
   }, []);
 
@@ -115,12 +109,13 @@ function Pontes() {
   };
 
   const handleEquipeChange = (e) => {
-    const novaEquipe = e.target.value;
-    setEquipe(novaEquipe);
+    const novaEquipe = equipes.find(eq => eq.nome === e.target.value);
 
+    setEquipe(novaEquipe);
+    setMassaPonte(novaEquipe.massaPonte + "KG");
     setLinhas([...LINHAS_INICIAIS]);
     setCargaAtual("11KG");
-    setCargaEstimada("0KG");
+    setCargaPrevista(novaEquipe.cargaPrevista + "KG");
     setCargaAcumulada(11);
     setContador(10);
     setAtivo(false);
@@ -148,18 +143,18 @@ function Pontes() {
             ref={selectRef}
             name="equipes"
             id="equipes"
-            value={equipe}
+            value={equipe.nome}
             onChange={handleEquipeChange}
           >
-            <option value="" disabled>Selecione a Equipe</option>
+            <option value="">Selecione a Equipe</option>
             {equipes.map((equipeItem) => (
               <option key={equipeItem.id} value={equipeItem.nome}>
                 {equipeItem.nome}
               </option>
             ))}
-
           </select>
-          <h3>{dados.massaDaPonte}</h3>
+
+          <h3>{massaPonte}</h3>
         </div>
 
         <div className='contagem'>
@@ -180,7 +175,7 @@ function Pontes() {
             <div className='estimada'>
               <p>CARGA</p>
               <p>ESTIMADA</p>
-              <p>{cargaEstimada}</p>
+              <p>{cargaPrevista}</p>
             </div>
             <div className='proxima'>
               <p style={{ marginTop: "3vh" }}>CARGA</p>
