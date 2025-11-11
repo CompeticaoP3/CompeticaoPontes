@@ -124,7 +124,14 @@ function Pontes() {
   };
 
   return (
-    <div className='pontes'>
+    <div
+      className='pontes'
+      onClick={handleClick}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        handleClick();
+      }}
+    >
       <div className='pesos'>
         {linhas.map((linha, index) => (
           <Linhas
@@ -145,6 +152,11 @@ function Pontes() {
             id="equipes"
             value={equipe.nome}
             onChange={handleEquipeChange}
+            onClick={(e) => e.stopPropagation()}
+            onContextMenu={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+            }}
           >
             <option value="">Selecione a Equipe</option>
             {equipes.map((equipeItem) => (
@@ -158,7 +170,7 @@ function Pontes() {
         </div>
 
         <div className='contagem'>
-          <div className='circulo' onClick={handleClick}>
+          <div className='circulo'>
             <p>{contador === 10 ? 10 : contador.toFixed(1)}</p>
           </div>
         </div>
