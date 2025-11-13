@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import './Pontes.css'
 import Linhas from './components/Linhas'
+import Popup from './components/Popup'
 
 const LINHAS_INICIAIS = [
   { "tipo": "", "ordem": "23", "kilo": "10KG", "visivel": false },
@@ -39,6 +40,7 @@ function Pontes() {
   const [cargaPrevista, setCargaPrevista] = useState("0KG");
   const [cargaAcumulada, setCargaAcumulada] = useState(11);
   const [massaPonte, setMassaPonte] = useState("0KG");
+  const [showPopup, setShowPopup] = useState(false);
 
   const selectRef = useRef(null);
 
@@ -105,6 +107,7 @@ function Pontes() {
     } else {
       setAtivo(false);
       setContador(10);
+      setShowPopup(true);
     }
   };
 
@@ -150,15 +153,19 @@ function Pontes() {
             ref={selectRef}
             name="equipes"
             id="equipes"
-            value={equipe.nome}
+            value={equipe?.nome || ""}
             onChange={handleEquipeChange}
             onClick={(e) => e.stopPropagation()}
             onContextMenu={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
+              e.stopPropagation()
+              e.preventDefault()
             }}
           >
-            <option value="">Selecione a Equipe</option>
+            {!equipe?.nome && (
+              <option value="" disabled>
+                Selecione a Equipe
+              </option>
+            )}
             {equipes.map((equipeItem) => (
               <option key={equipeItem.id} value={equipeItem.nome}>
                 {equipeItem.nome}
@@ -211,6 +218,17 @@ function Pontes() {
           </div>
         </div>
       </div>
+
+      {showPopup && (
+        <Popup
+          cargaRuptura={cargaAtual}
+          onOk={(valor) => {
+            console.log("Usuário digitou:", valor)
+            setShowPopup(false)
+          }}
+          onCancel={() => setShowPopup(false)}
+        />
+      )}
     </div>
   );
 }
