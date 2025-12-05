@@ -23,7 +23,7 @@ const LINHAS_INICIAIS = [
   { "tipo": "", "ordem": "7", "kilo": "5KG", "visivel": false },
   { "tipo": "", "ordem": "6", "kilo": "10KG", "visivel": false },
   { "tipo": "", "ordem": "5", "kilo": "10KG", "visivel": false },
-  { "tipo": "", "ordem": "4", "kilo": "10KG", "visivel": false },
+  { "tipo": "", "ordem": "4", "kilo": "10KG", "visivel": false }, 
   { "tipo": "", "ordem": "3", "kilo": "5KG", "visivel": false },
   { "tipo": "", "ordem": "2", "kilo": "5KG", "visivel": false },
   { "tipo": "Proxima Carga", "ordem": "1", "kilo": "5KG", "visivel": true },
@@ -192,13 +192,13 @@ function Pontes() {
         <div className='cargas'>
           <div className='cargastitulo'>
             <div className='estimada'>
-              <p style={{fontWeight: "600"}}>CARGA</p>
-              <p style={{fontWeight: "600"}}>ESTIMADA</p>
+              <p style={{fontWeight: "400", fontSize:"4.5vh"}}>CARGA</p>
+              <p style={{fontWeight: "400", fontSize:"4.5vh"}}>ESTIMADA</p>
               <p>{cargaPrevista}</p>
             </div>
             <div className='proxima'>
-              <p style={{ marginTop: "3vh", fontWeight: "600"}}>CARGA</p>
-              <p style={{fontWeight: "600"}}>ATUAL</p>
+              <p style={{ marginTop: "3vh", fontWeight: "400", fontSize:"4.5vh"}}>CARGA</p>
+              <p style={{fontWeight: "400", fontSize:"4.5vh"}}>ATUAL</p>
               <p>{cargaAtual}</p>
             </div>
           </div>
