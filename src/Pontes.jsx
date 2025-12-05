@@ -192,28 +192,20 @@ function Pontes() {
         <div className='cargas'>
           <div className='cargastitulo'>
             <div className='estimada'>
-              <p>CARGA</p>
-              <p>ESTIMADA</p>
+              <p style={{fontWeight: "600"}}>CARGA</p>
+              <p style={{fontWeight: "600"}}>ESTIMADA</p>
               <p>{cargaPrevista}</p>
             </div>
             <div className='proxima'>
-              <p style={{ marginTop: "3vh" }}>CARGA</p>
-              <p>ATUAL</p>
+              <p style={{ marginTop: "3vh", fontWeight: "600"}}>CARGA</p>
+              <p style={{fontWeight: "600"}}>ATUAL</p>
               <p>{cargaAtual}</p>
             </div>
           </div>
         </div>
 
         <div className='apoio'>
-          <div className='apoiotexto'>
-            <p>APOIO</p>
-          </div>
           <div className='imagens'>
-
-            <img src="/proec.png" alt="ProEC" />
-
-            <img src="/prograd.png" alt="Prograd" />
-            <img src="/aameg1.png" alt="UFERSA" />
             <img src="/ufersa.png" alt="UFERSA" />
           </div>
         </div>

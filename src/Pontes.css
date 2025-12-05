@@ -156,7 +156,7 @@ body {
 .circulo {
     width: 38vh;
     height: 38vh;
-    background: linear-gradient(180deg, #022E5F 30%, #688B5F 100%);
+    background: linear-gradient(0deg, #022E5F 30%, #688B5F 100%);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -203,17 +203,9 @@ body {
     margin-right: 4vh;
 }
 
-
-.apoiotexto {
-
-    font-size: 3.5vh;
-    margin-right: 1vh;
-    color: #fff;
-}
-
 .apoio img {
-    width: 12vh;
-    height: 12vh;
+    width: 33vh;
+    height: 11vh;
 }
 
 .cargas,
