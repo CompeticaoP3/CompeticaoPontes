@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import './Pontes.css'
 import Linhas from './components/Linhas'
+import Popup from './components/Popup'
 
 const LINHAS_INICIAIS = [
   { "tipo": "", "ordem": "23", "kilo": "10KG", "visivel": false },
@@ -39,6 +40,7 @@ function Pontes() {
   const [cargaPrevista, setCargaPrevista] = useState("0KG");
   const [cargaAcumulada, setCargaAcumulada] = useState(11);
   const [massaPonte, setMassaPonte] = useState("0KG");
+  const [showPopup, setShowPopup] = useState(false);
 
   const selectRef = useRef(null);
 
@@ -105,6 +107,7 @@ function Pontes() {
     } else {
       setAtivo(false);
       setContador(10);
+      setShowPopup(true);
     }
   };
 
@@ -124,7 +127,14 @@ function Pontes() {
   };
 
   return (
-    <div className='pontes'>
+    <div
+      className='pontes'
+      onClick={handleClick}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        handleClick();
+      }}
+    >
       <div className='pesos'>
         {linhas.map((linha, index) => (
           <Linhas
@@ -143,10 +153,19 @@ function Pontes() {
             ref={selectRef}
             name="equipes"
             id="equipes"
-            value={equipe.nome}
+            value={equipe?.nome || ""}
             onChange={handleEquipeChange}
+            onClick={(e) => e.stopPropagation()}
+            onContextMenu={(e) => {
+              e.stopPropagation()
+              e.preventDefault()
+            }}
           >
-            <option value="">Selecione a Equipe</option>
+            {!equipe?.nome && (
+              <option value="" disabled>
+                Selecione a Equipe
+              </option>
+            )}
             {equipes.map((equipeItem) => (
               <option key={equipeItem.id} value={equipeItem.nome}>
                 {equipeItem.nome}
@@ -158,7 +177,7 @@ function Pontes() {
         </div>
 
         <div className='contagem'>
-          <div className='circulo' onClick={handleClick}>
+          <div className='circulo'>
             <p>{contador === 10 ? 10 : contador.toFixed(1)}</p>
           </div>
         </div>
@@ -173,32 +192,35 @@ function Pontes() {
         <div className='cargas'>
           <div className='cargastitulo'>
             <div className='estimada'>
-              <p>CARGA</p>
-              <p>ESTIMADA</p>
+              <p style={{fontWeight: "600"}}>CARGA</p>
+              <p style={{fontWeight: "600"}}>ESTIMADA</p>
               <p>{cargaPrevista}</p>
             </div>
             <div className='proxima'>
-              <p style={{ marginTop: "3vh" }}>CARGA</p>
-              <p>ATUAL</p>
+              <p style={{ marginTop: "3vh", fontWeight: "600"}}>CARGA</p>
+              <p style={{fontWeight: "600"}}>ATUAL</p>
               <p>{cargaAtual}</p>
             </div>
           </div>
         </div>
 
         <div className='apoio'>
-          <div className='apoiotexto'>
-            <p>APOIO</p>
-          </div>
           <div className='imagens'>
-
-            <img src="/proec.png" alt="ProEC" />
-
-            <img src="/prograd.png" alt="Prograd" />
-            <img src="/aameg1.png" alt="UFERSA" />
             <img src="/ufersa.png" alt="UFERSA" />
           </div>
         </div>
       </div>
+
+      {showPopup && (
+        <Popup
+          cargaRuptura={cargaAtual}
+          onOk={(valor) => {
+            console.log("Usuário digitou:", valor)
+            setShowPopup(false)
+          }}
+          onCancel={() => setShowPopup(false)}
+        />
+      )}
     </div>
   );
 }
