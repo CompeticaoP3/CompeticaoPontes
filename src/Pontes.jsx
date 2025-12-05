@@ -23,11 +23,11 @@ const LINHAS_INICIAIS = [
   { "tipo": "", "ordem": "7", "kilo": "5KG", "visivel": false },
   { "tipo": "", "ordem": "6", "kilo": "10KG", "visivel": false },
   { "tipo": "", "ordem": "5", "kilo": "10KG", "visivel": false },
-  { "tipo": "", "ordem": "4", "kilo": "10KG", "visivel": false }, 
+  { "tipo": "", "ordem": "4", "kilo": "10KG", "visivel": false },
   { "tipo": "", "ordem": "3", "kilo": "5KG", "visivel": false },
   { "tipo": "", "ordem": "2", "kilo": "5KG", "visivel": false },
-  { "tipo": "Proxima Carga", "ordem": "1", "kilo": "5KG", "visivel": true },
-  { "tipo": "Carga Atual", "ordem": "0", "kilo": "11KG", "kilorecorde": "11KG", "visivel": true }
+  { "tipo": "Proxima Carga", "ordem": "1", "kilo": "5KG", "kilorecorde": "Soma", "visivel": true },
+  { "tipo": "Carga Atual", "ordem": "0", "kilo": "0KG", "kilorecorde": "11KG", "visivel": true }
 ];
 
 function Pontes() {
@@ -41,6 +41,7 @@ function Pontes() {
   const [cargaAcumulada, setCargaAcumulada] = useState(11);
   const [massaPonte, setMassaPonte] = useState("0KG");
   const [showPopup, setShowPopup] = useState(false);
+  const [primeiroClique, setPrimeiroClique] = useState(false);
 
   const selectRef = useRef(null);
 
@@ -59,14 +60,29 @@ function Pontes() {
       setCargaAtual(novoTotal + "KG");
 
       return prevLinhas.map((l, i) => {
-        if (i === novaPosicao)
-          return { ...l, tipo: "Carga Atual", kilorecorde: novoTotal + "KG" };
-        if (i === novaPosicao - 1)
-          return { ...l, tipo: "Proxima Carga", visivel: true };
-        if (i === indexAtual)
+        if (i === novaPosicao) {
+          return {
+            ...l,
+            tipo: "Carga Atual",
+            kilorecorde: novoTotal + "KG"
+          };
+        }
+
+        if (i === novaPosicao - 1) {
+          return {
+            ...l,
+            tipo: "Proxima Carga",
+            visivel: true,
+            kilorecorde: "Soma"
+          };
+        }
+
+        if (i === indexAtual) {
           return { ...l, tipo: "", kilorecorde: "" };
-        if (l.tipo === "Recorde")
-          return l;
+        }
+
+        if (l.tipo === "Recorde") return l;
+
         return { ...l, tipo: "" };
       });
     });
@@ -81,7 +97,6 @@ function Pontes() {
       .then(data => setEquipes(data))
       .catch(err => console.error("Erro ao buscar equipes:", err));
   }, []);
-
 
   useEffect(() => {
     let intervalo;
@@ -102,6 +117,17 @@ function Pontes() {
 
   const handleClick = () => {
     if (!ativo) {
+      if (!primeiroClique) {
+        setLinhas(prev =>
+          prev.map(l =>
+            l.tipo === "Carga Atual"
+              ? { ...l, kilo: "11KG" }
+              : l
+          )
+        );
+        setPrimeiroClique(true);
+      }
+
       setContador(10);
       setAtivo(true);
     } else {
@@ -122,6 +148,8 @@ function Pontes() {
     setCargaAcumulada(11);
     setContador(10);
     setAtivo(false);
+    setPrimeiroClique(false);
+    setShowPopup(false);
 
     e.target.blur();
   };
@@ -135,7 +163,7 @@ function Pontes() {
         handleClick();
       }}
     >
-      <div className='pesos'>
+      <div className={`pesos ${primeiroClique ? 'primeiro-clique-ativo' : 'primeiro-clique-inativo'}`}>
         {linhas.map((linha, index) => (
           <Linhas
             key={index}
@@ -181,24 +209,22 @@ function Pontes() {
             <p>{contador === 10 ? 10 : contador.toFixed(1)}</p>
           </div>
         </div>
-        <div className='status'>
-        </div>
       </div>
 
       <div className='direita'>
         <div className='icones'>
-          <a href="https://pontes.ufersa.dev.br"><img src="/pontesLogo.png" alt="" /></a>
+          <a href="https://www.pontes.ufersa.dev.br"><img src="/pontesLogo.png" alt="" /></a>
         </div>
         <div className='cargas'>
           <div className='cargastitulo'>
             <div className='estimada'>
-              <p style={{fontWeight: "400", fontSize:"4.5vh"}}>CARGA</p>
-              <p style={{fontWeight: "400", fontSize:"4.5vh"}}>ESTIMADA</p>
+              <p style={{ fontWeight: "400", fontSize: "4.5vh" }}>CARGA</p>
+              <p style={{ fontWeight: "400", fontSize: "4.5vh" }}>ESTIMADA</p>
               <p>{cargaPrevista}</p>
             </div>
             <div className='proxima'>
-              <p style={{ marginTop: "3vh", fontWeight: "400", fontSize:"4.5vh"}}>CARGA</p>
-              <p style={{fontWeight: "400", fontSize:"4.5vh"}}>ATUAL</p>
+              <p style={{ marginTop: "3vh", fontWeight: "400", fontSize: "4.5vh" }}>CARGA</p>
+              <p style={{ fontWeight: "400", fontSize: "4.5vh" }}>ATUAL</p>
               <p>{cargaAtual}</p>
             </div>
           </div>

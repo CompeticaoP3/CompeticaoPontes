@@ -2,7 +2,12 @@ import { useState } from 'react'
 import '../Pontes.css'
 
 function Linhas(props) {
-    const propsStyle = {width: props.kilo === '5KG' ? "13vh" : "18vh", backgroundColor: props.tipo === 'Carga Atual' ? '#507d46' : '#006494', display: props.visivel === true ? '' : 'none'};
+    const propsStyle = {
+        width: props.kilo === '5KG' ? "13vh" : "18vh",
+        backgroundColor: props.tipo === 'Carga Atual' ? '#507d46' : '#006494',
+        display: props.visivel === true ? '' : 'none'
+    };
+
     return (
         <div className='linhas'>
             <div className='linha'>
@@ -13,17 +18,19 @@ function Linhas(props) {
                         </div>
                     )}
                 </div>
+
                 <div className='meio-linha'>
                     {props.kilo && (
                         <div
                             className="caixa"
                             id="kilo"
-                            style= {propsStyle}
+                            style={propsStyle}
                         >
                             <p>{props.kilo}</p>
                         </div>
                     )}
                 </div>
+
                 <div className='direita-linha'>
                     {props.kilorecorde && (
                         <div className="caixa" id="kilorecorde">
