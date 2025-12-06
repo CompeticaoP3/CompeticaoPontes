@@ -104,8 +104,17 @@ body {
   display: flex !important;
 }
 
+.pesos.primeiro-clique-inativo #kilorecorde {
+  display: none !important;
+}
+
+.pesos.primeiro-clique-ativo #kilorecorde {
+  display: flex !important;
+}
+
 #kilorecorde {
     background-color: #507d46;
+    display: none;
 }
 
 /* Meio */
