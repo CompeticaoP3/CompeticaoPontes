@@ -27,7 +27,7 @@ const LINHAS_INICIAIS = [
   { "tipo": "", "ordem": "3", "kilo": "5KG", "visivel": false },
   { "tipo": "", "ordem": "2", "kilo": "5KG", "visivel": false },
   { "tipo": "Proxima Carga", "ordem": "1", "kilo": "5KG", "kilorecorde": "Soma", "visivel": true },
-  { "tipo": "Carga Atual", "ordem": "0", "kilo": "0KG", "kilorecorde": "11KG", "visivel": true }
+  { "tipo": "Carga Atual", "ordem": "0", "kilo": "0KG", "kilorecorde": "0KG", "visivel": true }
 ];
 
 function Pontes() {
@@ -36,7 +36,7 @@ function Pontes() {
   const [ativo, setAtivo] = useState(false);
   const [equipe, setEquipe] = useState({});
   const [equipes, setEquipes] = useState([]);
-  const [cargaAtual, setCargaAtual] = useState("11KG");
+  const [cargaAtual, setCargaAtual] = useState("0KG");
   const [cargaPrevista, setCargaPrevista] = useState("0KG");
   const [cargaAcumulada, setCargaAcumulada] = useState(11);
   const [massaPonte, setMassaPonte] = useState("0KG");
@@ -121,10 +121,11 @@ function Pontes() {
         setLinhas(prev =>
           prev.map(l =>
             l.tipo === "Carga Atual"
-              ? { ...l, kilo: "11KG" }
+              ? { ...l, kilo: "11KG", kilorecorde: "11KG" }
               : l
           )
         );
+        setCargaAtual("11KG");
         setPrimeiroClique(true);
       }
 
