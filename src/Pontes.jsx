@@ -144,7 +144,7 @@ function Pontes() {
     setEquipe(novaEquipe);
     setMassaPonte(novaEquipe.massaPonte + "KG");
     setLinhas([...LINHAS_INICIAIS]);
-    setCargaAtual("11KG");
+    setCargaAtual("0KG");
     setCargaPrevista(novaEquipe.cargaPrevista + "KG");
     setCargaAcumulada(11);
     setContador(10);
