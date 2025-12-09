@@ -89,7 +89,7 @@ function Pontes() {
   };
 
   useEffect(() => {
-    fetch("https://backendcp3-production.up.railway.app/api/equipes")
+    fetch("https://web-production-d6a89.up.railway.app/api/equipes")
       .then(res => {
         if (!res.ok) throw new Error(`Erro na resposta: ${res.status}`);
         return res.json();
