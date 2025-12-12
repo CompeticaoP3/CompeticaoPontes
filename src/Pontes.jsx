@@ -4,30 +4,30 @@ import Linhas from './components/Linhas'
 import Popup from './components/Popup'
 
 const LINHAS_INICIAIS = [
-  { "tipo": "", "ordem": "23", "kilo": "10KG", "visivel": false },
-  { "tipo": "", "ordem": "22", "kilo": "10KG", "visivel": false },
-  { "tipo": "", "ordem": "21", "kilo": "10KG", "visivel": false },
-  { "tipo": "", "ordem": "20", "kilo": "10KG", "visivel": false },
-  { "tipo": "", "ordem": "19", "kilo": "10KG", "visivel": false },
-  { "tipo": "", "ordem": "18", "kilo": "10KG", "visivel": false },
-  { "tipo": "", "ordem": "17", "kilo": "10KG", "visivel": false },
-  { "tipo": "", "ordem": "16", "kilo": "10KG", "visivel": false },
-  { "tipo": "", "ordem": "15", "kilo": "10KG", "visivel": false },
-  { "tipo": "", "ordem": "14", "kilo": "10KG", "visivel": false },
-  { "tipo": "", "ordem": "13", "kilo": "10KG", "visivel": false },
-  { "tipo": "", "ordem": "12", "kilo": "10KG", "visivel": false },
-  { "tipo": "", "ordem": "11", "kilo": "10KG", "visivel": false },
-  { "tipo": "", "ordem": "10", "kilo": "10KG", "visivel": false },
-  { "tipo": "", "ordem": "9", "kilo": "5KG", "visivel": false },
-  { "tipo": "", "ordem": "8", "kilo": "5KG", "visivel": false },
-  { "tipo": "", "ordem": "7", "kilo": "5KG", "visivel": false },
-  { "tipo": "", "ordem": "6", "kilo": "10KG", "visivel": false },
-  { "tipo": "", "ordem": "5", "kilo": "10KG", "visivel": false },
-  { "tipo": "", "ordem": "4", "kilo": "10KG", "visivel": false },
-  { "tipo": "", "ordem": "3", "kilo": "5KG", "visivel": false },
-  { "tipo": "", "ordem": "2", "kilo": "5KG", "visivel": false },
-  { "tipo": "Proxima Carga", "ordem": "1", "kilo": "5KG", "kilorecorde": "Soma", "visivel": true },
-  { "tipo": "Carga Atual", "ordem": "0", "kilo": "0KG", "kilorecorde": "0KG", "visivel": true }
+  { tipo: "", ordem: "23", kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "22", kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "21", kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "20", kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "19", kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "18", kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "17", kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "16", kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "15", kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "14", kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "13", kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "12", kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "11", kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "10", kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "9",  kilo: "5KG", visivel: false },
+  { tipo: "", ordem: "8",  kilo: "5KG", visivel: false },
+  { tipo: "", ordem: "7",  kilo: "5KG", visivel: false },
+  { tipo: "", ordem: "6",  kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "5",  kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "4",  kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "3",  kilo: "5KG", visivel: false },
+  { tipo: "", ordem: "2",  kilo: "5KG", visivel: false },
+  { tipo: "Proxima Carga", ordem: "1", kilo: "5KG", kilorecorde: "Soma", visivel: true },
+  { tipo: "Carga Atual",   ordem: "0", kilo: "0KG", kilorecorde: "0KG", visivel: true }
 ];
 
 function Pontes() {
@@ -172,6 +172,7 @@ function Pontes() {
             kilo={linha.kilo}
             kilorecorde={linha.kilorecorde}
             visivel={linha.visivel}
+            primeiroClique={primeiroClique}
           />
         ))}
       </div>
