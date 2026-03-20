@@ -160,12 +160,6 @@ option {
     align-items: center;
 }
 
-.principal p {
-    font-size: 6vh;
-
-    margin: 3vh 0 1.5vh;
-}
-
 .principal h3 {
     font-size: 3.5vh;
 
@@ -177,24 +171,21 @@ option {
     text-decoration: none;
 }
 
-.circulo {
-    width: 38vh;
-    height: 38vh;
-    background: linear-gradient(0deg, #12356A 30%, #4B6B60 100%);
-    border: 0.1vh solid white;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    border-radius: 50%;
+.contagem {
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
     margin-top: 13vh;
+    background: linear-gradient(0deg, #12356A 30%, #4B6B60 100%);
+    border-radius: 50%;
 }
 
-.circulo p {
-    font-size: 22vh;
-    text-align: center;
-    margin-bottom: 5vh;
+
+.tempo {
+    font-size: 20vh;
+    font-weight: 900;
+    color: white;
+    transform: translateY(-5%);
 }
 
 .status {
@@ -230,8 +221,8 @@ option {
 }
 
 .apoio img {
-    width: 33vh;
-    height: 11vh;
+    width: 30vh;
+    height: auto;
 }
 
 .cargas,

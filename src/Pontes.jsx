@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 import './Pontes.css'
 import Linhas from './components/Linhas'
 import Popup from './components/Popup'
@@ -18,29 +19,29 @@ const LINHAS_INICIAIS = [
   { tipo: "", ordem: "12", kilo: "10KG", visivel: false },
   { tipo: "", ordem: "11", kilo: "10KG", visivel: false },
   { tipo: "", ordem: "10", kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "9",  kilo: "5KG", visivel: false },
-  { tipo: "", ordem: "8",  kilo: "5KG", visivel: false },
-  { tipo: "", ordem: "7",  kilo: "5KG", visivel: false },
-  { tipo: "", ordem: "6",  kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "5",  kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "4",  kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "3",  kilo: "5KG", visivel: false },
-  { tipo: "", ordem: "2",  kilo: "5KG", visivel: false },
+  { tipo: "", ordem: "9", kilo: "5KG", visivel: false },
+  { tipo: "", ordem: "8", kilo: "5KG", visivel: false },
+  { tipo: "", ordem: "7", kilo: "5KG", visivel: false },
+  { tipo: "", ordem: "6", kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "5", kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "4", kilo: "10KG", visivel: false },
+  { tipo: "", ordem: "3", kilo: "5KG", visivel: false },
+  { tipo: "", ordem: "2", kilo: "5KG", visivel: false },
   { tipo: "Proxima Carga", ordem: "1", kilo: "5KG", kilorecorde: "Soma", visivel: true },
-  { tipo: "Carga Atual",   ordem: "0", kilo: "0KG", kilorecorde: "0KG", visivel: true }
+  { tipo: "Carga Atual", ordem: "0", kilo: "0KG", kilorecorde: "0KG", visivel: true }
 ];
 
 function Pontes() {
   const [linhas, setLinhas] = useState(LINHAS_INICIAIS);
-  const [contador, setContador] = useState(10);
   const [ativo, setAtivo] = useState(false);
   const [equipe, setEquipe] = useState({});
   const [equipes, setEquipes] = useState([]);
-  const [cargaAtual, setCargaAtual] = useState("0KG");
+  const [pesoColocado, setPesoColocado] = useState("0KG");
   const [cargaPrevista, setCargaPrevista] = useState("0KG");
   const [cargaAcumulada, setCargaAcumulada] = useState(11);
   const [massaPonte, setMassaPonte] = useState("0KG");
   const [showPopup, setShowPopup] = useState(false);
+  const [showApoioPopup, setShowApoioPopup] = useState(false);
   const [primeiroClique, setPrimeiroClique] = useState(false);
 
   const selectRef = useRef(null);
@@ -57,7 +58,7 @@ function Pontes() {
       const novoTotal = cargaAcumulada + valorCarga;
 
       setCargaAcumulada(novoTotal);
-      setCargaAtual(novoTotal + "KG");
+      setPesoColocado(novoTotal + "KG");
 
       return prevLinhas.map((l, i) => {
         if (i === novaPosicao) {
@@ -89,7 +90,7 @@ function Pontes() {
   };
 
   useEffect(() => {
-    fetch("https://web-production-d6a89.up.railway.app/api/equipes")
+    fetch("https://web-production-2502.up.railway.app/api/equipes")
       .then(res => {
         if (!res.ok) throw new Error(`Erro na resposta: ${res.status}`);
         return res.json();
@@ -97,23 +98,6 @@ function Pontes() {
       .then(data => setEquipes(data))
       .catch(err => console.error("Erro ao buscar equipes:", err));
   }, []);
-
-  useEffect(() => {
-    let intervalo;
-    if (ativo) {
-      intervalo = setInterval(() => {
-        setContador((prev) => {
-          if (prev <= 0.1) {
-            setAtivo(false);
-            moverAtual(atual === 0 ? 7 : atual - 1);
-            return 10;
-          }
-          return prev - 0.1;
-        });
-      }, 100);
-    }
-    return () => clearInterval(intervalo);
-  }, [ativo]);
 
   const handleClick = () => {
     if (!ativo) {
@@ -125,15 +109,13 @@ function Pontes() {
               : l
           )
         );
-        setCargaAtual("11KG");
+        setPesoColocado("11KG");
         setPrimeiroClique(true);
       }
 
-      setContador(10);
       setAtivo(true);
     } else {
       setAtivo(false);
-      setContador(10);
       setShowPopup(true);
     }
   };
@@ -144,10 +126,10 @@ function Pontes() {
     setEquipe(novaEquipe);
     setMassaPonte(novaEquipe.massaPonte + "KG");
     setLinhas([...LINHAS_INICIAIS]);
-    setCargaAtual("0KG");
+    setPesoColocado("0KG");
     setCargaPrevista(novaEquipe.cargaPrevista + "KG");
     setCargaAcumulada(11);
-    setContador(10);
+
     setAtivo(false);
     setPrimeiroClique(false);
     setShowPopup(false);
@@ -207,9 +189,28 @@ function Pontes() {
         </div>
 
         <div className='contagem'>
-          <div className='circulo'>
-            <p>{contador === 10 ? 10 : contador.toFixed(1)}</p>
-          </div>
+          <CountdownCircleTimer
+            key={ativo ? 'running' : 'stopped'}
+            isPlaying={ativo}
+            duration={10}
+            size={300}
+            strokeLinecap="butt"
+            trailColor="#ffffff"
+            strokeWidth={10}
+            colors={['#00ff88', '#ffaa00', '#ff0000']}
+            colorsTime={[10, 5, 0]}
+            onComplete={() => {
+              setAtivo(false)
+              moverAtual(atual === 0 ? 7 : atual - 1)
+              return { shouldRepeat: false }
+            }}
+          >
+            {({ remainingTime }) => (
+              <p className="tempo">
+                {remainingTime}
+              </p>
+            )}
+          </CountdownCircleTimer>
         </div>
       </div>
 
@@ -225,15 +226,21 @@ function Pontes() {
               <p>{cargaPrevista}</p>
             </div>
             <div className='proxima'>
-              <p style={{ marginTop: "3vh", fontWeight: "400", fontSize: "4.5vh" }}>CARGA</p>
-              <p style={{ fontWeight: "400", fontSize: "4.5vh" }}>ATUAL</p>
-              <p>{cargaAtual}</p>
+              <p style={{ marginTop: "3vh", fontWeight: "400", fontSize: "4.5vh" }}>PESO</p>
+              <p style={{ fontWeight: "400", fontSize: "4.5vh" }}>COLOCADO</p>
+              <p>{pesoColocado}</p>
             </div>
           </div>
         </div>
 
         <div className='apoio'>
-          <div className='imagens'>
+          <div
+            className='imagens'
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowApoioPopup(true);
+            }}
+          >
             <img src="/ufersa.png" alt="UFERSA" />
           </div>
         </div>
@@ -241,13 +248,43 @@ function Pontes() {
 
       {showPopup && (
         <Popup
-          cargaRuptura={cargaAtual}
+          cargaRuptura={pesoColocado}
           onOk={(valor) => {
             console.log("Usuário digitou:", valor)
             setShowPopup(false)
           }}
           onCancel={() => setShowPopup(false)}
         />
+      )}
+
+      {showApoioPopup && (
+        <div className="popup-overlay" onClick={() => setShowApoioPopup(false)}>
+          <div
+            className="popup-container"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="popup-title">
+              <h2 className="popup-text">Apoio</h2>
+            </div>
+
+            <input
+              className="popup-input"
+              placeholder="Digite algo..."
+            />
+
+            <div className="popup-buttons">
+              <button
+                className="popup-ok"
+                onClick={() => {
+                  console.log("Confirmado");
+                  setShowApoioPopup(false);
+                }}
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
