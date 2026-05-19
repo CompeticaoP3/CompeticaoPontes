@@ -3,6 +3,7 @@ import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 import './Pontes.css'
 import Linhas from './components/Linhas'
 import Popup from './components/Popup'
+import { Esp32ConnectionPopup } from './components/Esp32ConnectionPopup'
 
 const LINHAS_INICIAIS = [
   { tipo: "", ordem: "23", kilo: "10KG", visivel: false },
@@ -257,35 +258,10 @@ function Pontes() {
         />
       )}
 
-      {showApoioPopup && (
-        <div className="popup-overlay" onClick={() => setShowApoioPopup(false)}>
-          <div
-            className="popup-container"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="popup-title">
-              <h2 className="popup-text">Apoio</h2>
-            </div>
-
-            <input
-              className="popup-input"
-              placeholder="Digite algo..."
-            />
-
-            <div className="popup-buttons">
-              <button
-                className="popup-ok"
-                onClick={() => {
-                  console.log("Confirmado");
-                  setShowApoioPopup(false);
-                }}
-              >
-                OK
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <Esp32ConnectionPopup
+        show={showApoioPopup}
+        setShow={setShowApoioPopup}
+      />
     </div>
   );
 }
