@@ -136,28 +136,30 @@ function Pontes() {
         </div>
 
         <div className='contagem'>
-          <CountdownCircleTimer
-            key={ativo ? 'running' : 'stopped'}
-            isPlaying={ativo}
-            duration={10}
-            size={300}
-            strokeLinecap="butt"
-            trailColor="#ffffff"
-            strokeWidth={10}
-            colors={['#00ff88', '#ffaa00', '#ff0000']}
-            colorsTime={[10, 5, 0]}
-            onComplete={() => {
-              setAtivo(false)
-              moverAtual(indiceAtual > 0 ? indiceAtual - 1 : 0)
-              return { shouldRepeat: false }
-            }}
-          >
-            {({ remainingTime }) => (
-              <p className="tempo">
-                {remainingTime}
-              </p>
-            )}
-          </CountdownCircleTimer>
+          <div className="pulsing-circle">
+            <CountdownCircleTimer
+              key={ativo ? 'running' : 'stopped'}
+              isPlaying={ativo}
+              duration={10}
+              size={475}
+              strokeLinecap="butt"
+              trailColor="#ffffff"
+              strokeWidth={25}
+              colors={['#00ff88', '#ffaa00', '#ff0000']}
+              colorsTime={[10, 5, 0]}
+              onComplete={() => {
+                setAtivo(false)
+                moverAtual(indiceAtual > 0 ? indiceAtual - 1 : 0)
+                return { shouldRepeat: false }
+              }}
+            >
+              {({ remainingTime }) => (
+                <p className="tempo">
+                  {remainingTime}
+                </p>
+              )}
+            </CountdownCircleTimer>
+          </div>
         </div>
       </div>
 
@@ -168,13 +170,13 @@ function Pontes() {
         <div className='cargas'>
           <div className='cargastitulo'>
             <div className='estimada'>
-              <p style={{ fontWeight: "400", fontSize: "4.5vh" }}>CARGA</p>
-              <p style={{ fontWeight: "400", fontSize: "4.5vh" }}>ESTIMADA</p>
+              <p style={{ fontWeight: "400", fontSize: "35px" }}>CARGA</p>
+              <p style={{ fontWeight: "400", fontSize: "40px" }}>ESTIMADA</p>
               <p>{cargaPrevista}</p>
             </div>
             <div className='proxima'>
-              <p style={{ marginTop: "3vh", fontWeight: "400", fontSize: "4.5vh" }}>PESO</p>
-              <p style={{ fontWeight: "400", fontSize: "4.5vh" }}>TOTAL</p>
+              <p style={{ marginTop: "3vh", fontWeight: "400", fontSize: "35px" }}>PESO</p>
+              <p style={{ fontWeight: "400", fontSize: "40px" }}>TOTAL</p>
               <p>{pesoTotal}</p>
             </div>
           </div>
