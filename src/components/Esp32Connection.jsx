@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 
-export function Esp32ConnectionPopup({ setShowApoioPopup }) {
+export function Esp32Connection({ show, setShow }) {
   const [ipAddress, setIpAddress] = useState("");
   const [status, setStatus] = useState("Desconectado");
   const wsRef = useRef(null);
@@ -66,14 +66,30 @@ export function Esp32ConnectionPopup({ setShowApoioPopup }) {
     };
   }, []);
 
+  if (!show) return null;
+
   return (
-    <div className="popup-overlay" onClick={() => setShowApoioPopup(false)}>
+    <div className="popup-overlay" onClick={() => setShow(false)}>
       <div
         className="popup-container"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="popup-title">
           <h2 className="popup-text">Conexão ESP32</h2>
+          <button 
+            className="popup-close"
+            onClick={() => setShow(false)}
+            style={{
+              background: "none",
+              border: "none",
+              fontSize: "24px",
+              cursor: "pointer",
+              padding: "0",
+              marginLeft: "auto"
+            }}
+          >
+            ✕
+          </button>
         </div>
 
         <input
@@ -90,21 +106,11 @@ export function Esp32ConnectionPopup({ setShowApoioPopup }) {
 
         <div className="popup-buttons">
           <button 
-            className="popup-connect" 
+            className="popup-ok" 
             onClick={handleConnect}
             disabled={status === "Conectando..."}
           >
             {status === "Conectando..." ? "Aguarde..." : "Conectar"}
-          </button>
-          
-          <button
-            className="popup-ok"
-            onClick={() => {
-              console.log("Confirmado, mantendo conexão em background se houver");
-              setShowApoioPopup(false);
-            }}
-          >
-            OK
           </button>
         </div>
       </div>

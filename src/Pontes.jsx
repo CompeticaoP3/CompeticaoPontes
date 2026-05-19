@@ -3,41 +3,15 @@ import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 import './Pontes.css'
 import Linhas from './components/Linhas'
 import Popup from './components/Popup'
-import { Esp32ConnectionPopup } from './components/Esp32ConnectionPopup'
-
-const LINHAS_INICIAIS = [
-  { tipo: "", ordem: "23", kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "22", kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "21", kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "20", kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "19", kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "18", kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "17", kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "16", kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "15", kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "14", kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "13", kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "12", kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "11", kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "10", kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "9", kilo: "5KG", visivel: false },
-  { tipo: "", ordem: "8", kilo: "5KG", visivel: false },
-  { tipo: "", ordem: "7", kilo: "5KG", visivel: false },
-  { tipo: "", ordem: "6", kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "5", kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "4", kilo: "10KG", visivel: false },
-  { tipo: "", ordem: "3", kilo: "5KG", visivel: false },
-  { tipo: "", ordem: "2", kilo: "5KG", visivel: false },
-  { tipo: "Proxima Carga", ordem: "1", kilo: "5KG", kilorecorde: "Soma", visivel: true },
-  { tipo: "Carga Atual", ordem: "0", kilo: "0KG", kilorecorde: "0KG", visivel: true }
-];
+import { Esp32Connection } from './components/Esp32Connection'
+import { LINHAS_INICIAIS } from './model/linhasIniciais'
 
 function Pontes() {
   const [linhas, setLinhas] = useState(LINHAS_INICIAIS);
   const [ativo, setAtivo] = useState(false);
   const [equipe, setEquipe] = useState({});
   const [equipes, setEquipes] = useState([]);
-  const [pesoColocado, setPesoColocado] = useState("0KG");
+  const [pesoTotal, setPesoTotal] = useState("0KG");
   const [cargaPrevista, setCargaPrevista] = useState("0KG");
   const [cargaAcumulada, setCargaAcumulada] = useState(11);
   const [massaPonte, setMassaPonte] = useState("0KG");
@@ -47,47 +21,17 @@ function Pontes() {
 
   const selectRef = useRef(null);
 
-  let atual = linhas.indexOf(linhas.find(linha => linha.tipo === "Carga Atual"));
+  const [indiceAtual, setIndiceAtual] = useState(LINHAS_INICIAIS.length - 1);
 
   const moverAtual = (novaPosicao) => {
-    setLinhas((prevLinhas) => {
-      const indexAtual = prevLinhas.findIndex((l) => l.tipo === "Carga Atual");
-      if (indexAtual === -1) return prevLinhas;
+    setIndiceAtual(novaPosicao);
+    
+    const kiloNovaCarga = LINHAS_INICIAIS[novaPosicao]?.kilo || "0KG";
+    const valorCarga = parseInt(kiloNovaCarga.replace("KG", ""));
+    const novoTotal = cargaAcumulada + valorCarga;
 
-      const novaCarga = prevLinhas[novaPosicao].kilo;
-      const valorCarga = parseInt(novaCarga.replace("KG", ""));
-      const novoTotal = cargaAcumulada + valorCarga;
-
-      setCargaAcumulada(novoTotal);
-      setPesoColocado(novoTotal + "KG");
-
-      return prevLinhas.map((l, i) => {
-        if (i === novaPosicao) {
-          return {
-            ...l,
-            tipo: "Carga Atual",
-            kilorecorde: novoTotal + "KG"
-          };
-        }
-
-        if (i === novaPosicao - 1) {
-          return {
-            ...l,
-            tipo: "Proxima Carga",
-            visivel: true,
-            kilorecorde: "Soma"
-          };
-        }
-
-        if (i === indexAtual) {
-          return { ...l, tipo: "", kilorecorde: "" };
-        }
-
-        if (l.tipo === "Recorde") return l;
-
-        return { ...l, tipo: "" };
-      });
-    });
+    setCargaAcumulada(novoTotal);
+    setPesoTotal(novoTotal + "KG");
   };
 
   useEffect(() => {
@@ -110,7 +54,7 @@ function Pontes() {
               : l
           )
         );
-        setPesoColocado("11KG");
+        setPesoTotal("11KG");
         setPrimeiroClique(true);
       }
 
@@ -127,7 +71,7 @@ function Pontes() {
     setEquipe(novaEquipe);
     setMassaPonte(novaEquipe.massaPonte + "KG");
     setLinhas([...LINHAS_INICIAIS]);
-    setPesoColocado("0KG");
+    setPesoTotal("0KG");
     setCargaPrevista(novaEquipe.cargaPrevista + "KG");
     setCargaAcumulada(11);
 
@@ -148,16 +92,18 @@ function Pontes() {
       }}
     >
       <div className={`pesos ${primeiroClique ? 'primeiro-clique-ativo' : 'primeiro-clique-inativo'}`}>
-        {linhas.map((linha, index) => (
-          <Linhas
-            key={index}
-            tipo={linha.tipo}
-            kilo={linha.kilo}
-            kilorecorde={linha.kilorecorde}
-            visivel={linha.visivel}
-            primeiroClique={primeiroClique}
-          />
-        ))}
+        <Linhas 
+          label="Carga próxima" 
+          kilo={LINHAS_INICIAIS[indiceAtual > 0 ? indiceAtual - 1 : 0]?.kilo} 
+        />
+        <Linhas 
+          label="Carga atual" 
+          kilo={LINHAS_INICIAIS[indiceAtual]?.kilo} 
+        />
+        <Linhas 
+          label="Carga anterior" 
+          kilo={LINHAS_INICIAIS[indiceAtual < LINHAS_INICIAIS.length - 1 ? indiceAtual + 1 : LINHAS_INICIAIS.length - 1]?.kilo} 
+        />
       </div>
 
       <div className='principal'>
@@ -202,7 +148,7 @@ function Pontes() {
             colorsTime={[10, 5, 0]}
             onComplete={() => {
               setAtivo(false)
-              moverAtual(atual === 0 ? 7 : atual - 1)
+              moverAtual(indiceAtual > 0 ? indiceAtual - 1 : 0)
               return { shouldRepeat: false }
             }}
           >
@@ -228,8 +174,8 @@ function Pontes() {
             </div>
             <div className='proxima'>
               <p style={{ marginTop: "3vh", fontWeight: "400", fontSize: "4.5vh" }}>PESO</p>
-              <p style={{ fontWeight: "400", fontSize: "4.5vh" }}>COLOCADO</p>
-              <p>{pesoColocado}</p>
+              <p style={{ fontWeight: "400", fontSize: "4.5vh" }}>TOTAL</p>
+              <p>{pesoTotal}</p>
             </div>
           </div>
         </div>
@@ -249,7 +195,7 @@ function Pontes() {
 
       {showPopup && (
         <Popup
-          cargaRuptura={pesoColocado}
+          cargaRuptura={pesoTotal}
           onOk={(valor) => {
             console.log("Usuário digitou:", valor)
             setShowPopup(false)
@@ -258,7 +204,7 @@ function Pontes() {
         />
       )}
 
-      <Esp32ConnectionPopup
+      <Esp32Connection
         show={showApoioPopup}
         setShow={setShowApoioPopup}
       />
