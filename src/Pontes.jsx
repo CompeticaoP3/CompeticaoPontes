@@ -18,6 +18,7 @@ function Pontes() {
   const [showPopup, setShowPopup] = useState(false);
   const [showApoioPopup, setShowApoioPopup] = useState(false);
   const [primeiroClique, setPrimeiroClique] = useState(false);
+  const [pulsingColor, setPulsingColor] = useState('#00ff88');
 
   const selectRef = useRef(null);
 
@@ -93,15 +94,15 @@ function Pontes() {
     >
       <div className={`pesos ${primeiroClique ? 'primeiro-clique-ativo' : 'primeiro-clique-inativo'}`}>
         <Linhas 
-          label="Carga próxima" 
+          label="PRÓXIMA CARGA" 
           kilo={LINHAS_INICIAIS[indiceAtual > 0 ? indiceAtual - 1 : 0]?.kilo} 
         />
         <Linhas 
-          label="Carga atual" 
+          label="CARGA ATUAL" 
           kilo={LINHAS_INICIAIS[indiceAtual]?.kilo} 
         />
         <Linhas 
-          label="Carga anterior" 
+          label="CARGA ANTERIOR" 
           kilo={LINHAS_INICIAIS[indiceAtual < LINHAS_INICIAIS.length - 1 ? indiceAtual + 1 : LINHAS_INICIAIS.length - 1]?.kilo} 
         />
       </div>
@@ -136,7 +137,7 @@ function Pontes() {
         </div>
 
         <div className='contagem'>
-          <div className="pulsing-circle">
+          <div className="pulsing-circle" style={{ '--pulsing-color': pulsingColor }}>
             <CountdownCircleTimer
               key={ativo ? 'running' : 'stopped'}
               isPlaying={ativo}
@@ -153,11 +154,16 @@ function Pontes() {
                 return { shouldRepeat: false }
               }}
             >
-              {({ remainingTime }) => (
-                <p className="tempo">
-                  {remainingTime}
-                </p>
-              )}
+              {({ remainingTime }) => {
+                const color = remainingTime > 5 ? '#00ff88' : remainingTime > 0 ? '#f17c0e' : '#ff0000';
+                setPulsingColor(color);
+
+                return (
+                  <p className="tempo">
+                    {remainingTime}
+                  </p>
+                );
+              }}
             </CountdownCircleTimer>
           </div>
         </div>
@@ -175,6 +181,7 @@ function Pontes() {
               <p>{cargaPrevista}</p>
             </div>
             <div className='proxima'>
+              <div style={{ width: '100%', height: '2px', backgroundColor: 'white', margin: '20px 0' }}></div>
               <p style={{ marginTop: "3vh", fontWeight: "400", fontSize: "35px" }}>PESO</p>
               <p style={{ fontWeight: "400", fontSize: "40px" }}>TOTAL</p>
               <p>{pesoTotal}</p>

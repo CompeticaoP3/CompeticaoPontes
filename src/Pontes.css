@@ -77,50 +77,37 @@ body {
 }
 
 .caixa_tipo {
-    background: linear-gradient(0deg, #12356A 30%, #4B6B60 100%);
     color: #fff;
-    box-shadow: rgba(0, 0, 0, .1) 0 6.48px 17.28px;
-    width: 210px;
-    height: 40px;
+    width: 350px;
+    height: 50px;
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid rgb(255, 255, 255);
     box-sizing: border-box;
-    font-size: 23.76px;
-    margin-right: 10px;
+    font-weight: 400;
+    font-size: 30px;
+    margin-right: 20px;
 }
 
 .caixa_kilo {
     color: #fff;
-    box-shadow: rgba(0, 0, 0, .1) 0 6.48px 17.28px;
-    width: 300px;
-    height: 100px;
     border-radius: 10px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
     font-size: 40px;
 }
 
 #proximo {
-    background: linear-gradient(0deg, #12356A 30%, #4B6B60 100%);
     width: 200px;
-    border: 1px solid white;
 }
 
 #atual {
-    background: linear-gradient(0deg, #12356A 30%, #4B6B60 100%);
-    border: 1px solid white;
     font-size: 60px;
     height: 120px;
+    width: 300px;
 }
 
 #anterior {
-    background: linear-gradient(0deg, #12356A 30%, #4B6B60 100%);
-    border: 1px solid white;
     width: 200px;
 }
 
@@ -211,15 +198,15 @@ option {
 
 @keyframes pulsar-animacao {
     0% {
-        box-shadow: 0 0 0 0px rgba(0, 255, 136, 0.7);
+        box-shadow: 0 0 0 0px var(--pulsing-color);
         transform: scale(1);
     }
     70% {
-        box-shadow: 0 0 0 40px rgba(0, 255, 136, 0);
+        box-shadow: 0 0 0 40px transparent;
         transform: scale(1.02);
     }
     100% {
-        box-shadow: 0 0 0 0px rgba(0, 255, 136, 0);
+        box-shadow: 0 0 0 0px transparent;
         transform: scale(1);
     }
 }
@@ -292,7 +279,6 @@ option {
 .cargas {
     display: flex;
     flex-direction: column;
-    align-items: end;
     font-size: 100px;
     text-align: center;
     color: white;
@@ -300,7 +286,7 @@ option {
 
 .cargas p {
     margin-right: 21.6px;
-    text-align: end;
+    text-align: left;
 }
 
 /* Pop-up */
