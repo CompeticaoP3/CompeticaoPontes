@@ -65,11 +65,12 @@ body {
 }
 
 .icones-esquerda img {
-    width: 300px;
+    width: 320px;
 }
 
 .icones-direita img {
-    width: 300px;
+    margin-top: 13px;
+    width: 320px;
 }
 
 .pesos {
@@ -126,11 +127,11 @@ body {
 }
 
 .caixa_kilo {
-    padding: 10px;
+    padding: 20px;
     color: #fff;
     border-radius: 10px;
     display: flex;
-    font-size: 50px;
+    font-size: 70px;
     justify-content: center;
     align-items: center;
     background: rgba(2, 46, 95, 0.8);
@@ -145,7 +146,7 @@ body {
 }
 
 #proximo {
-    
+    background: linear-gradient(0deg, #12356A 30%, #4B6B60 100%);
 }
 
 #atual {
@@ -153,7 +154,7 @@ body {
 }
 
 #anterior {
-;
+    background: linear-gradient(0deg, #4B6B60, 30%, #12356A 100%);
 }
 
 .pesos.primeiro-clique-ativo #tipo {
@@ -327,7 +328,8 @@ option {
     font-size: 100px;
     text-align: center;
     color: white;
-    margin-top: 230px;
+    justify-content: center;
+    margin-bottom: 60px;
 }
 
 .cargas p {
