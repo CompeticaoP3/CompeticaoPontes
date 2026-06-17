@@ -2,9 +2,8 @@ import '../Pontes.css'
 
 function Linhas({ kilo, label }) {
   const getPositionId = () => {
-    if (label === "Carga próxima") return "proximo";
-    if (label === "Carga atual") return "atual";
-    if (label === "Carga anterior") return "anterior";
+    if (label === "PRÓXIMA CARGA") return "proximo";
+    if (label === "CARGA ANTERIOR") return "anterior";
     return "desconhecido";
   };
 

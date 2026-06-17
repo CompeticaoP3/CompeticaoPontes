@@ -92,19 +92,20 @@ function Pontes() {
         handleClick();
       }}
     >
-      <div className={`pesos ${primeiroClique ? 'primeiro-clique-ativo' : 'primeiro-clique-inativo'}`}>
-        <Linhas 
-          label="PRÓXIMA CARGA" 
-          kilo={LINHAS_INICIAIS[indiceAtual > 0 ? indiceAtual - 1 : 0]?.kilo} 
-        />
-        <Linhas 
-          label="CARGA ATUAL" 
-          kilo={LINHAS_INICIAIS[indiceAtual]?.kilo} 
-        />
-        <Linhas 
-          label="CARGA ANTERIOR" 
-          kilo={LINHAS_INICIAIS[indiceAtual < LINHAS_INICIAIS.length - 1 ? indiceAtual + 1 : LINHAS_INICIAIS.length - 1]?.kilo} 
-        />
+      <div className='esquerda'>
+        <div className='icones-esquerda'>
+          <a href="https://www.pontes.ufersa.dev.br"><img src="/pontesLogo.png" alt="Logo Competição Pontes" /></a>
+        </div>
+        <div className={`pesos ${primeiroClique ? 'primeiro-clique-ativo' : 'primeiro-clique-inativo'}`}>
+          <Linhas 
+            label="PRÓXIMA CARGA" 
+            kilo={LINHAS_INICIAIS[indiceAtual > 0 ? indiceAtual - 1 : 0]?.kilo} 
+          />
+          <Linhas 
+            label="CARGA ANTERIOR" 
+            kilo={LINHAS_INICIAIS[indiceAtual < LINHAS_INICIAIS.length - 1 ? indiceAtual + 1 : LINHAS_INICIAIS.length - 1]?.kilo} 
+          />
+        </div>
       </div>
 
       <div className='principal'>
@@ -133,7 +134,7 @@ function Pontes() {
             ))}
           </select>
 
-          <h3>{massaPonte}</h3>
+          <h3 style={{marginTop: '20px'}}>{massaPonte}</h3>
         </div>
 
         <div className='contagem'>
@@ -170,8 +171,8 @@ function Pontes() {
       </div>
 
       <div className='direita'>
-        <div className='icones'>
-          <a href="https://www.pontes.ufersa.dev.br"><img src="/pontesLogo.png" alt="" /></a>
+        <div className='icones-direita'>
+          <img src="/ufersa.png" alt="UFERSA" />
         </div>
         <div className='cargas'>
           <div className='cargastitulo'>
@@ -197,7 +198,7 @@ function Pontes() {
               setShowApoioPopup(true);
             }}
           >
-            <img src="/ufersa.png" alt="UFERSA" />
+            
           </div>
         </div>
       </div>
