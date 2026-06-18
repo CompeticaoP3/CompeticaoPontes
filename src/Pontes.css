@@ -90,7 +90,6 @@ body {
     flex-direction: column;
     background: rgba(255, 255, 255, 0.1);
     padding: 30px;
-    border-left: 5px solid #12356A;
 }
 
 .linha {
@@ -330,6 +329,7 @@ option {
     color: white;
     justify-content: center;
     margin-bottom: 60px;
+    gap: 30px;
 }
 
 .cargas p {

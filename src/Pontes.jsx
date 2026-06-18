@@ -133,8 +133,6 @@ function Pontes() {
               </option>
             ))}
           </select>
-
-          <h3 style={{ marginTop: '20px' }}>{massaPonte}</h3>
         </div>
 
         <div className='contagem'>
@@ -182,19 +180,39 @@ function Pontes() {
             <img src="/ufersa.png" alt="UFERSA" />
           </div>
         </div>
-
         <div className='cargas'>
-          <div className='cargastitulo'>
-            <div className='estimada'>
-              <p style={{ fontWeight: "400", fontSize: "35px" }}>CARGA</p>
-              <p style={{ fontWeight: "400", fontSize: "40px" }}>ESTIMADA</p>
-              <p>{cargaPrevista}</p>
+
+          {/* Bloco: Carga Estimada */}
+          <div className='linhas' style={{marginTop: '20px'}}>
+            <div className='linha'>
+              <div className='direita-linha'>
+                <div className="caixa_kilo" id='proximo'>
+                  <p>{cargaPrevista}</p>
+                </div>
+              </div>
+              <div className='esquerda-linha'>
+                <div className="caixa_tipo" style={{marginLeft: '25px'}}>
+                  <p style={{marginLeft: '25px'}}>CARGA<br />ESTIMADA</p>
+                </div>
+              </div>
+
+
             </div>
-            <div className='proxima'>
-              <div style={{ width: '100%', height: '2px', backgroundColor: 'white', margin: '20px 0' }}></div>
-              <p style={{ marginTop: "3vh", fontWeight: "400", fontSize: "35px" }}>PESO</p>
-              <p style={{ fontWeight: "400", fontSize: "40px" }}>TOTAL</p>
-              <p>{pesoTotal}</p>
+          </div>
+
+          {/* Bloco: Peso Total */}
+          <div className='linhas'>
+            <div className='linha'>
+              <div className='direita-linha' >
+                <div className="caixa_kilo" id='anterior' >
+                  <p>{pesoTotal}</p>
+                </div>
+              </div>
+              <div className='esquerda-linha' >
+                <div className="caixa_tipo" style={{marginLeft: '25px'}}>
+                  <p style={{marginLeft: '-45px'}}>PESO<br />TOTAL</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
