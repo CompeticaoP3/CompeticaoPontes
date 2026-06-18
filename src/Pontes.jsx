@@ -232,6 +232,7 @@ function Pontes() {
       <Esp32Connection
         show={showApoioPopup}
         setShow={setShowApoioPopup}
+        action={handleClick}
       />
     </div>
   );
