@@ -45,9 +45,8 @@ function Pontes() {
       .catch(err => console.error("Erro ao buscar equipes:", err));
   }, []);
 
-  const handleClick = () => {
-    if (!ativo) {
-      if (!primeiroClique) {
+  const iniciarTempo = () => {
+    if (!primeiroClique) {
         setLinhas(prev =>
           prev.map(l =>
             l.tipo === "Carga Atual"
@@ -60,9 +59,19 @@ function Pontes() {
       }
 
       setAtivo(true);
+  }
+
+  const interromperTempo = () => {
+    setAtivo(false);
+    setShowPopup(true);
+  }
+
+  const handleClick = () => {
+    if (!ativo) {
+      iniciarTempo();
     } else {
-      setAtivo(false);
-      setShowPopup(true);
+      interromperTempo();
+      
     }
   };
 
@@ -232,7 +241,8 @@ function Pontes() {
       <Esp32Connection
         show={showApoioPopup}
         setShow={setShowApoioPopup}
-        action={handleClick}
+        inicio={iniciarTempo}
+        interromper={interromperTempo}
       />
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 
-export function Esp32Connection({ show, setShow, action }) {
+export function Esp32Connection({ show, setShow, inicio, interromper, enviarDadosESP32 }) {
   const [ipAddress, setIpAddress] = useState("");
   const [status, setStatus] = useState("Desconectado");
   const wsRef = useRef(null);
@@ -37,7 +37,10 @@ export function Esp32Connection({ show, setShow, action }) {
       ws.onmessage = (event) => {
         console.log("Dados recebidos do ESP32:", event.data);
         if(event.data === "BOTAO_PRESSIONADO") {
-          action(); // Chama a função passada como prop para lidar com o evento
+          inicio();
+        }
+        if(event.data === "INTERROMPER") {
+          interromper();
         }
       };
 
