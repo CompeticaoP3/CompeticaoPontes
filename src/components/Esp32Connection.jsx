@@ -39,7 +39,7 @@ export function Esp32Connection({ show, setShow, inicio, interromper, enviarDado
         if(event.data === "BOTAO_PRESSIONADO") {
           inicio();
         }
-        if(event.data === "INTERROMPER") {
+        if(event.data === "INTERROMPIDO") {
           interromper();
         }
       };

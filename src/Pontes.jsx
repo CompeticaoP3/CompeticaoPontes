@@ -71,7 +71,6 @@ function Pontes() {
       iniciarTempo();
     } else {
       interromperTempo();
-      
     }
   };
 
