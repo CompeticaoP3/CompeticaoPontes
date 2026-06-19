@@ -54,8 +54,8 @@ function Pontes() {
               : l
           )
         );
-        setPesoTotal("11KG");
         setPrimeiroClique(true);
+        setPesoTotal("11KG");
       }
 
       setAtivo(true);

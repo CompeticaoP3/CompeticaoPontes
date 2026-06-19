@@ -22,5 +22,5 @@ export const LINHAS_INICIAIS = [
   { kilo: "5KG" },
   { kilo: "5KG" },
   { kilo: "5KG" },
-  { kilo: "0KG" }
+  { kilo: "11KG" }
 ];
